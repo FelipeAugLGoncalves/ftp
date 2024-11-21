@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+
+        *{
+            padding: 0;
+            margin: 0;
+        }
+
+        .div-main{
+
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .titulo{
+            background-color: #df0808;
+            padding: 20px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .arq-subir{
+            background-color: #000000;
+            padding: 25px;
+            color: #fff;  
+            text-align: center;  
+        }
+
+        .arq-subir > form > button{
+            border-radius: 2px;
+            width: 200px;
+            font-size: medium;
+            font-weight: 400;
+        }
+
+        .arq-subir > form > input{
+            width: 300px;
+            margin: 10px;
+        }
+
+        .arq-list{
+            background-color: #df0808;
+            color: #fff;
+            text-align: center;  
+        }
+
+        a{
+            color: #fff;
+            text-decoration: none;
+        }
+
+        a:after{
+            color: #000;
+        }
+
+        button{
+            padding: 5px;
+            color: black;
+            background-color: #d6d6d6;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="div-main">
+        <h1 class="titulo">Aplicação de Compartilhamento de Arquivos</h1>
+        <div class="arq-subir">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+
+                <input type="file" name="file" required><br>
+
+                <button type="submit">Enviar Arquivo</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="arq-list">
+        <h2>Arquivos Disponíveis:</h2>
+        <ul>
+            {% for file in files %}
+                <li>
+                    <a href="{{ url_for('download_file', file_id=file.id) }}">{{ file.filename }}</a>
+                    <form action="{{ url_for('delete_file', file_id=file.id) }}" method="POST" style="display:inline;">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
